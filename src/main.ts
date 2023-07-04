@@ -1,11 +1,16 @@
-import "./style.css";
-import videoSrc from "../ressources/video.mov?url";
+import './style.css';
+import videoSrc from '../ressources/video.mov?url';
+import { io } from 'socket.io-client';
+
+
+
+const socket = io('https://localhost:3000');
 
 const MAX_DISTANCE = 3500;
 const MIN_DISTANCE = 3;
 const TOTAL_DISTANCE = MAX_DISTANCE - MIN_DISTANCE;
 
-document.querySelector<HTMLDivElement>("#video-container")!.innerHTML = `
+document.querySelector<HTMLDivElement>('#video-container')!.innerHTML = `
 <video
   id="video"
   src="${videoSrc}"
@@ -17,11 +22,11 @@ document.querySelector<HTMLDivElement>("#video-container")!.innerHTML = `
 />
 `;
 
-const video = document.getElementById("video") as HTMLVideoElement;
+const video = document.getElementById('video') as HTMLVideoElement;
 
-video.addEventListener("loadeddata", () => {
+video.addEventListener('loadeddata', () => {
   const duration = video.duration;
-  console.log("duration", duration);
+  console.log('duration', duration);
 
   video.controls = false;
 
@@ -33,10 +38,14 @@ video.addEventListener("loadeddata", () => {
     video.currentTime = time;
   };
 
-  let distance = 3;
+  // let distance = 3;
 
-  setInterval(() => {
-    setVideoTime(distance);
-    distance += 50;
-  }, 500);
+  // setInterval(() => {
+  //   setVideoTime(distance);
+  //   distance += 50;
+  // }, 500);
+
+  socket.on('distance', (newDistance: number) => {
+    setVideoTime(newDistance);
+  })
 });
