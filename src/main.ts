@@ -1,13 +1,14 @@
 import './style.css';
-import videoSrc from '../ressources/video.mov?url';
+import videoSrc from '../ressources/FullVideo.mp4';
 import { io } from 'socket.io-client';
+import Controller from './controller';
 
+// const socket = io('http://localhost:3000');
+const socket = io('https://raspberrypi.local:3000');
 
-
-const socket = io('https://localhost:3000');
-
-const MAX_DISTANCE = 3500;
-const MIN_DISTANCE = 3;
+// distance in cm
+const MAX_DISTANCE = 150;
+const MIN_DISTANCE = 0.3;
 const TOTAL_DISTANCE = MAX_DISTANCE - MIN_DISTANCE;
 
 document.querySelector<HTMLDivElement>('#video-container')!.innerHTML = `
@@ -25,27 +26,23 @@ document.querySelector<HTMLDivElement>('#video-container')!.innerHTML = `
 const video = document.getElementById('video') as HTMLVideoElement;
 
 video.addEventListener('loadeddata', () => {
-  const duration = video.duration;
-  console.log('duration', duration);
-
   video.controls = false;
 
-  const setVideoTime = (distance: number): void => {
-    const rawTime = Number(((distance * duration) / TOTAL_DISTANCE).toFixed(6));
-    const time = Math.max(0, Math.min(duration, rawTime));
-    console.log(time);
+  const controller = new Controller(video, {
+    maxDistance: MAX_DISTANCE,
+    minDistance: MIN_DISTANCE,
+    totalDistance: TOTAL_DISTANCE,
+  });
 
-    video.currentTime = time;
-  };
+  // const setVideoTime = (distance: number): void => {
+  //   const rawTime = Number(((distance * duration) / TOTAL_DISTANCE).toFixed(6));
+  //   const time = Math.max(0, Math.min(duration, rawTime));
+  //   console.log(time);
 
-  // let distance = 3;
-
-  // setInterval(() => {
-  //   setVideoTime(distance);
-  //   distance += 50;
-  // }, 500);
+  //   controller.updateCurrentTime(time);
+  // };
 
   socket.on('distance', (newDistance: number) => {
-    setVideoTime(newDistance);
-  })
+    controller.update(newDistance);
+  });
 });
