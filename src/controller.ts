@@ -185,9 +185,10 @@ class Controller {
   private drawNews() {
     if (this.earthRotate.paused) return;
 
-    if (this.currentNews.length === 0 || this.newsTime >= 1000) {
+    if (this.currentNews.length === 0 || this.newsTime >= 500) {
       const newNews = this.getRandomNewNews();
       if (newNews !== null) this.currentNews.push(newNews);
+      else this.currentNews = [];
 
       this.newsTime = 0;
     }
