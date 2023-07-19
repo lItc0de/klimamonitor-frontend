@@ -68,19 +68,21 @@ class Controller {
     this.addNews();
   }
 
-  private addNews() {
+  private async addNews() {
     console.log('reality modules', realityNewsModules);
     console.log('fiction modules', fictionNewsModules);
 
     for (const path in realityNewsModules) {
       const image = new Image();
-      image.src = path;
+      const imgSrc = await realityNewsModules[path]() as { default: string };
+      image.src = imgSrc.default;
       this.realityNews.push(image);
     }
 
     for (const path in fictionNewsModules) {
       const image = new Image();
-      image.src = path;
+      const imgSrc = await fictionNewsModules[path]() as { default: string };
+      image.src = imgSrc.default;
       this.fictionNews.push(image);
     }
   }

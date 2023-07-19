@@ -16,13 +16,17 @@ const controller = new Controller({
   totalDistance: TOTAL_DISTANCE,
 });
 
-await controller.init();
+const init = async () => {
+  await controller.init();
 
-socket.on('distance', (newDistance: number) => {
-  controller.update(newDistance);
-});
+  socket.on('distance', (newDistance: number) => {
+    controller.update(newDistance);
+  });
 
+  controller.update(30);
+};
 
-// controller.update(30);
+init();
+
 // distanceUp(MIN_DISTANCE, MAX_DISTANCE, controller.update);
 // distanceDown(MIN_DISTANCE, MAX_DISTANCE, controller.update);
