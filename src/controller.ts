@@ -59,6 +59,13 @@ class Controller {
       this.canvas.requestFullscreen();
     });
 
+
+    document.addEventListener('keypress', (ev) => {
+      if (ev.key === 'f') {
+        this.canvas.requestFullscreen();
+      }
+    });
+
     this.totalDistance = config.totalDistance;
     this.maxDistance = config.maxDistance;
     this.minDistance = config.minDistance;
@@ -69,9 +76,6 @@ class Controller {
   }
 
   private async addNews() {
-    console.log('reality modules', realityNewsModules);
-    console.log('fiction modules', fictionNewsModules);
-
     for (const path in realityNewsModules) {
       const image = new Image();
       const imgSrc = await realityNewsModules[path]() as { default: string };

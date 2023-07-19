@@ -23,7 +23,7 @@ const init = async () => {
     controller.update(newDistance);
   });
 
-  controller.update(30);
+  // controller.update(30);
 };
 
 init();
