@@ -1,12 +1,9 @@
 import './style.css';
-// import videoSrc from '../ressources/Trial_2.mp4';
+
 import { io } from 'socket.io-client';
 import Controller from './controller';
-// import { distanceDown, distanceUp } from './mockDistance';
-// import VideoCanvas from './videoCanvas';
 
-// const socket = io('http://localhost:3000');
-const socket = io('https://raspberrypi.local:3000');
+const socket = io(import.meta.env.VITE_SOCKET_URL);
 
 // distance in cm
 const MAX_DISTANCE = 150;
@@ -26,6 +23,6 @@ socket.on('distance', (newDistance: number) => {
 });
 
 
-controller.update(30);
+// controller.update(30);
 // distanceUp(MIN_DISTANCE, MAX_DISTANCE, controller.update);
 // distanceDown(MIN_DISTANCE, MAX_DISTANCE, controller.update);
