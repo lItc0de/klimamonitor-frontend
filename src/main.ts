@@ -13,12 +13,6 @@ const MAX_DISTANCE = 150;
 const MIN_DISTANCE = 0.3;
 const TOTAL_DISTANCE = MAX_DISTANCE - MIN_DISTANCE;
 
-// const videoCanvas = new VideoCanvas(videoSrc);
-// await videoCanvas.videoToFrames();
-
-// const loadingEl = document.getElementById('loading');
-// if (loadingEl != null) loadingEl.style.display = 'none';
-
 const controller = new Controller({
   maxDistance: MAX_DISTANCE,
   minDistance: MIN_DISTANCE,
