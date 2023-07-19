@@ -14,6 +14,7 @@
     "vite": "^4.3.9"
   },
   "dependencies": {
+    "@types/dom-mediacapture-transform": "^0.1.6",
     "socket.io-client": "^4.7.1"
   }
 }

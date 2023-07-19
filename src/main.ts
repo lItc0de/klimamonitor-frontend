@@ -1,7 +1,9 @@
 import './style.css';
-import videoSrc from '../ressources/FullVideo.mp4';
+// import videoSrc from '../ressources/Trial_2.mp4';
 import { io } from 'socket.io-client';
 import Controller from './controller';
+// import { distanceDown, distanceUp } from './mockDistance';
+// import VideoCanvas from './videoCanvas';
 
 // const socket = io('http://localhost:3000');
 const socket = io('https://raspberrypi.local:3000');
@@ -11,38 +13,25 @@ const MAX_DISTANCE = 150;
 const MIN_DISTANCE = 0.3;
 const TOTAL_DISTANCE = MAX_DISTANCE - MIN_DISTANCE;
 
-document.querySelector<HTMLDivElement>('#video-container')!.innerHTML = `
-<video
-  id="video"
-  src="${videoSrc}"
-  controls="false"
-  crossorigin="anonymous"
-  width="100%"
-  height="100%"
-  muted="muted"
-/>
-`;
+// const videoCanvas = new VideoCanvas(videoSrc);
+// await videoCanvas.videoToFrames();
 
-const video = document.getElementById('video') as HTMLVideoElement;
+// const loadingEl = document.getElementById('loading');
+// if (loadingEl != null) loadingEl.style.display = 'none';
 
-video.addEventListener('loadeddata', () => {
-  video.controls = false;
-
-  const controller = new Controller(video, {
-    maxDistance: MAX_DISTANCE,
-    minDistance: MIN_DISTANCE,
-    totalDistance: TOTAL_DISTANCE,
-  });
-
-  // const setVideoTime = (distance: number): void => {
-  //   const rawTime = Number(((distance * duration) / TOTAL_DISTANCE).toFixed(6));
-  //   const time = Math.max(0, Math.min(duration, rawTime));
-  //   console.log(time);
-
-  //   controller.updateCurrentTime(time);
-  // };
-
-  socket.on('distance', (newDistance: number) => {
-    controller.update(newDistance);
-  });
+const controller = new Controller({
+  maxDistance: MAX_DISTANCE,
+  minDistance: MIN_DISTANCE,
+  totalDistance: TOTAL_DISTANCE,
 });
+
+await controller.init();
+
+socket.on('distance', (newDistance: number) => {
+  controller.update(newDistance);
+});
+
+
+controller.update(30);
+// distanceUp(MIN_DISTANCE, MAX_DISTANCE, controller.update);
+// distanceDown(MIN_DISTANCE, MAX_DISTANCE, controller.update);

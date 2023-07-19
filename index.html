@@ -8,13 +8,64 @@
   </head>
 
   <body>
-    <div id="video-container"></div>
+    <div id="videos-container">
+      <video
+        id="video-timelapse"
+        controls="false"
+        crossorigin="anonymous"
+        width="100%"
+        height="auto"
+        muted="muted"
+      ></video>
 
-    <!-- <div id="canvas-container">
-      <canvas id="c1" width="160" height="96"></canvas>
-    </div> -->
+      <video
+        id="video-zoomout"
+        controls="false"
+        crossorigin="anonymous"
+        width="100%"
+        height="auto"
+        muted="muted"
+      ></video>
+
+      <video
+        id="video-zoomin"
+        controls="false"
+        crossorigin="anonymous"
+        width="100%"
+        height="auto"
+        muted="muted"
+      ></video>
+
+      <video
+        id="video-earthrotate"
+        controls="false"
+        crossorigin="anonymous"
+        width="100%"
+        height="auto"
+        muted="muted"
+      ></video>
+    </div>
+
+
+    <div id="canvas-container">
+      <canvas id="canvas"></canvas>
+    </div>
+
+    <div id="loading">
+      <div class="lds-ripple"><div></div><div></div></div>
+    </div>
+
+    <div id="hidden">
+      <video
+        id="video"
+        controls="false"
+        crossorigin="anonymous"
+        width="100%"
+        height="auto"
+        muted="muted"
+      />
+    </div>
 
     <script type="module" src="/src/main.ts"></script>
-
   </body>
 </html>
